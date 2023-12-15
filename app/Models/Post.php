@@ -15,6 +15,10 @@ class Post extends Model
         'isPublished'
     ];
 
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'tag_post');
+    }
+
     public function comment()
     {
         return $this->hasMany(Comment::class);

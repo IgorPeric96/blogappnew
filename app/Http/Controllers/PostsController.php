@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,24 +16,23 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('isPublished', true)->get();
+        $posts = Post::paginate(3);
         return view('pages.posts', compact('posts'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|min:5|max:255',
-            'body' => 'required|string|min:10|max:5000'
-        ]);
 
-        Post::create([
+
+        $post = Post::create([
             'title' => $request->title,
             'body' => $request->body
         ]);
+
+        $post->tags()->attach($request->tags);
 
         return redirect('createpost')->with('status', 'Post successfully created.');
     }
@@ -41,6 +42,7 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
+     
         $post = Post::findOrFail($id);
         $comments = Comment::where('post_id', $id)->get();
         return view('pages.post', compact('post', 'comments'));
@@ -64,10 +66,8 @@ class PostsController extends Controller
 
     public function createPost()
     {
-        if (!Auth::check()) {
-            return redirect('/login')->with('status', 'Please log in to continue.');
-        }
+        $tags = Tag::all();
 
-        return view('pages.createpost');
+        return view('pages.createpost', compact('tags'));
     }
 }
