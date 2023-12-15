@@ -20,7 +20,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Save Post</button>
     </form>
-
     @include('components.errors')
     @include('components.status')
 @endsection

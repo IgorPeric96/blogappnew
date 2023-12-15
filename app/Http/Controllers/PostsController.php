@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -40,7 +42,8 @@ class PostsController extends Controller
     public function show(string $id)
     {
         $post = Post::findOrFail($id);
-        return view('pages.post', compact('post'));
+        $comments = Comment::where('post_id', $id)->get();
+        return view('pages.post', compact('post', 'comments'));
     }
 
     /**
@@ -61,6 +64,10 @@ class PostsController extends Controller
 
     public function createPost()
     {
+        if (!Auth::check()) {
+            return redirect('/login')->with('status', 'Please log in to continue.');
+        }
+
         return view('pages.createpost');
     }
 }

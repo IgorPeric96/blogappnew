@@ -1,7 +1,6 @@
 @extends('layout.default')
 
 @section('content')
-@extends('layout.default')
 
 @section('content')
 <main class="form-signin w-100 m-auto">

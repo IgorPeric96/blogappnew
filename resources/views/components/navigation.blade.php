@@ -13,9 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/posts">Posts</a>
                 </li>
+                @if(auth()->user())
                 <li class="nav-item">
                     <a class="nav-link" href="/createpost">Create Posts</a>
                 </li>
+                @endif
                 @if(!auth()->user())
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
