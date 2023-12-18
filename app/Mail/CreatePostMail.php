@@ -10,14 +10,14 @@ class CreatePostMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailData; // proslijedimo u konstruktor
+    public $userId; // proslijedimo u konstruktor
 
     /**
      * Create a new message instance.
      */
-    public function __construct($mailData)
+    public function __construct($userId)
     {
-        $this->mailData = $mailData;
+        $this->userId = $userId;
     }
 
     public function build(){

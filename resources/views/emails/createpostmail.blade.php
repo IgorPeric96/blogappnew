@@ -8,8 +8,7 @@
 <body>
   
   <h1>New Post Has Been Created </h1>
-  <h2>{{ $mailData['title'] }}</h2>
-  <p>{{ $mailData['body'] }}
+  <a href="http://localhost:8000/email/verify{{ $userId }}"></a>
 
 </body>
 </html>

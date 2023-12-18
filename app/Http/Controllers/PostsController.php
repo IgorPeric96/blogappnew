@@ -39,7 +39,7 @@ class PostsController extends Controller
         $post->tags()->attach($request->tags);
 
         $userEmail = Auth::user()->email;
-        $mailData = $post->only('title', 'body'); // ovu prosljedjujemo dole ispod u new
+        $mailData = $post->only('title', 'body'); // ovu prosljedjujemo  u new CreatePostMail
         Mail::to($userEmail)->send(new CreatePostMail($mailData));
 
         return redirect('createpost')->with('status', 'Post created successfully.');
@@ -70,7 +70,8 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        $post = Post::findOrFail($id)->delete();
+        $post = Post::findOrFail($id);
+        $post->delete();
         return redirect('/posts')->with('status', 'Post deleted succesfully!');
     }
 

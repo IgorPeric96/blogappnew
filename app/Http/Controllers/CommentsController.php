@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Mail\CreatePostMail;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class CommentsController extends Controller
 {
@@ -24,13 +26,23 @@ class CommentsController extends Controller
     public function store(CommentRequest $request)
     {
         // dd($request->all());
-        Comment::create([
+        $comment = Comment::create([
             'user_id' => $request->input('user_id'),
             'post_id' => $request->input('post_id'),
             'content' => $request->input('content'),
         ]);
 
+        $postComments = $comment->post->comments()->distinct('user_id')->get();
+        
+        
 
+        foreach($postComments as $postComment) {
+         
+            $email = $postComment->user->email;
+            $userId = $comment->user->id;
+            Mail::to($email)->send(new CreatePostMail($userId));
+        }
+        
         return redirect()->back()->with('status', 'Comment added succesfully');
     }
 
@@ -56,7 +68,8 @@ class CommentsController extends Controller
      */
     public function destroy(string $id)
     {
-        Comment::findOrFail('id', $id)->delete();
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
         return redirect()->back()->with('status', 'Comment deleted succesfully.');
     }
 }

@@ -17,9 +17,9 @@ class Post extends Model
     ];
     
     
-    public function comment()
+    public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class); // hasMany - relacija
     }
 
     public function user()
