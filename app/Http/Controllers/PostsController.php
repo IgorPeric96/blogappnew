@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
@@ -29,12 +30,13 @@ class PostsController extends Controller
 
         $post = Post::create([
             'title' => $request->title,
-            'body' => $request->body
+            'body' => $request->body,
+            'user_id' => $request->user_id
         ]);
 
         $post->tags()->attach($request->tags);
 
-        return redirect('createpost')->with('status', 'Post successfully created.');
+        return redirect('createpost')->with('status', 'Post created successfully.');
     }
 
     /**
@@ -51,9 +53,10 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, string $id)
     {
-        //
+        Post::findOrFail($id)->update(['title' => $request->input('title'), 'body' => $request->input('body')]);
+        return redirect()->back()->with('status', 'Post updated succesfully');
     }
 
     /**
@@ -61,7 +64,8 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id)->delete();
+        return redirect('/posts')->with('status', 'Post deleted succesfully!');
     }
 
     public function createPost()

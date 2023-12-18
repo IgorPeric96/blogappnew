@@ -1,4 +1,4 @@
-<form action="{{ url('createcomment') }}" method="POST">
+<form action="{{ url('comments') }}" method="POST">
     @csrf
     <div class="mb-3">
         <label class="form-label">Comment</label>

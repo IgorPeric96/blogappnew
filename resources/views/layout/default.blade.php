@@ -6,6 +6,8 @@
 
     <div class="container">
         @include('components.navigation')
+        @include('components.status')
+        @include('components.errors')
 
         <main class="mt-5 mb-5">
             @yield('content')

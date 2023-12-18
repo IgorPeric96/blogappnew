@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -42,9 +43,10 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCommentRequest $request, string $id)
     {
-        //
+        Comment::findOrFail('$id')->update(['content' => $request->input('content')]);
+        return redirect()->back()->with('status', 'Comment Succesfully updated');
     }
 
     /**
@@ -52,7 +54,7 @@ class CommentsController extends Controller
      */
     public function destroy(string $id)
     {
-        Comment::where('id', $id)->delete();
+        Comment::findOrFail('id', $id)->delete();
         return redirect()->back()->with('status', 'Comment deleted succesfully.');
     }
 }

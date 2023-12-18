@@ -1,11 +1,7 @@
 @extends('layout.default')
-
-
 @section('title')
     Create Post
 @endsection
-
-
 @section('content')
     <form action="{{ url('posts') }}" method="POST">
         @csrf
@@ -26,8 +22,7 @@
                 @endforeach
             </select>
         </div>
+        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
         <button type="submit" class="btn btn-primary">Save Post</button>
     </form>
-    @include('components.errors')
-    @include('components.status')
 @endsection

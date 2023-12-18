@@ -12,15 +12,22 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
-        'isPublished'
+        'isPublished',
+        'user_id'
     ];
-
-    public function tags(){
-        return $this->belongsToMany(Tag::class, 'tag_post');
-    }
-
+    
+    
     public function comment()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'tag_post');
     }
 }
