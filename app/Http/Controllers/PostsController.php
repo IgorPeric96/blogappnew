@@ -33,6 +33,7 @@ class PostsController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'body' => $request->body,
+            'user_id' => $request->user_id
         ]);
 
         $post->tags()->attach($request->tags);

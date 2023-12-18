@@ -29,6 +29,8 @@ class CommentsController extends Controller
             'post_id' => $request->input('post_id'),
             'content' => $request->input('content'),
         ]);
+
+
         return redirect()->back()->with('status', 'Comment added succesfully');
     }
 

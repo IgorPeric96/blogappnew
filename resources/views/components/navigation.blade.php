@@ -22,7 +22,7 @@
                     <a class="nav-link" href="/register">Register</a>
                 </li>
                 @else
-                @if(auth()->user()->isAdmin)
+                @if(auth()->user())
                 <li class="nav-item">
                     <a class="nav-link" href="/createpost">Create Posts</a>
                 </li>
