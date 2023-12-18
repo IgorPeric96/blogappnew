@@ -21,6 +21,6 @@ class CreatePostMail extends Mailable
     }
 
     public function build(){
-        return $this->subject('New Post Created')->view('emails.createpost.mail');
+        return $this->subject('New Post Created')->view('emails.createpostmail');
     }
 }   

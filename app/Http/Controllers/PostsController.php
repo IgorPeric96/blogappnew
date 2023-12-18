@@ -33,14 +33,13 @@ class PostsController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'body' => $request->body,
-            'user_id' => $request->user_id
         ]);
 
         $post->tags()->attach($request->tags);
 
         $userEmail = Auth::user()->email;
         $mailData = $post->only('title', 'body'); // ovu prosljedjujemo dole ispod u new
-        Mail::to($userEmail->send(new CreatePostMail($mailData)));
+        Mail::to($userEmail)->send(new CreatePostMail($mailData));
 
         return redirect('createpost')->with('status', 'Post created successfully.');
     }
