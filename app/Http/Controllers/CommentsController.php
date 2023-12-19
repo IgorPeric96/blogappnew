@@ -32,14 +32,12 @@ class CommentsController extends Controller
             'content' => $request->input('content'),
         ]);
 
-        $postComments = $comment->post->comments()->distinct('user_id')->get();
+        $postCommentsGroupedByUser = $comment->post->comments->groupBy('user_id');
         
-        
-
-        foreach($postComments as $postComment) {
-         
-            $email = $postComment->user->email;
-            $userId = $comment->user->id;
+        foreach($postCommentsGroupedByUser as $postComments) {
+            $user = $postComments->first()->user;
+            $email = $user->email;
+            $userId = $user->id;
             Mail::to($email)->send(new CreatePostMail($userId));
         }
         
