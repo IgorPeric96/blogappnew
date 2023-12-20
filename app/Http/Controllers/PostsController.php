@@ -81,4 +81,14 @@ class PostsController extends Controller
 
         return view('pages.createpost', compact('tags'));
     }
+
+    public function like() {
+        
+
+    }
+
+    public function unlike() {
+
+
+    }
 }

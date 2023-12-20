@@ -8,6 +8,21 @@
     <h1>{{ $post->title }}</h1>
     <p>{{ $post->body }}</p>
 
+    <!-- Blade syntax for checking if the user has liked the post -->
+@if (Auth::check() && Auth::user()->likes->contains('post_id', $post->id))
+    <form action="" method="post">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Unlike</button>
+    </form>
+@else
+    <form action="" method="post">
+        @csrf
+        <button type="submit">Like</button>
+    </form>
+@endif
+
+
 
     @foreach ($post->tags as $tag)
     <a href="/tags/{{ $tag->name }}" class="badege rounded-pill text-bg-secondary">{{ $tag->name }}</a>
