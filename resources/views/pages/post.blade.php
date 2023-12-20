@@ -9,7 +9,7 @@
     <p>{{ $post->body }}</p>
 
     <!-- Blade syntax for checking if the user has liked the post -->
-@if (Auth::check() && Auth::user()->likes->contains('post_id', $post->id))
+{{-- @if (Auth::check() && Auth::user()->likes->contains('post_id', $post->id))
     <form action="" method="post">
         @csrf
         @method('DELETE')
@@ -20,7 +20,7 @@
         @csrf
         <button type="submit">Like</button>
     </form>
-@endif
+@endif --}}
 
 
 
